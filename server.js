@@ -54,6 +54,54 @@ app.set('port', port)
 const server = http.createServer(app)
 
 /**
+ * Adding Dialogflow code.
+ */
+
+ // ran npm install dialogflow
+ // added credentials to .env and json file
+const projectId = 'fin-plendk'
+const sessionId = 'quickstart-session-id'
+let query = 'Who are you?'
+const languageCode = 'en-US'
+
+// Instantiate a DialogFlow client.
+const dialogflow = require('dialogflow')
+const sessionClient = new dialogflow.SessionsClient()
+
+// Define session path
+const sessionPath = sessionClient.sessionPath(projectId, sessionId)
+
+// The text query request.
+const request = {
+  session: sessionPath,
+  queryInput: {
+    text: {
+      text: query,
+      languageCode: languageCode
+    }
+  }
+}
+
+// Send request and log result
+sessionClient
+ .detectIntent(request)
+ .then(responses => {
+   console.log('Detected intent')
+   const result = responses[0].queryResult
+   // console.log('Full Result: ', result)
+   console.log(`Query: ${result.queryText}`)
+   console.log(`Response: ${result.fulfillmentText}`)
+   if (result.intent) {
+     console.log(`Intent: ${result.intent.displayName}`)
+   } else {
+     console.log(`No intent matched.`)
+   }
+ })
+ .catch(err => {
+   console.error('ERROR:', err)
+ })
+
+/**
  * Adding web socket code.
  */
 
@@ -72,6 +120,18 @@ io.on('connection', function (socket) {
     console.log(message)
     io.emit('greeting', message)
   })
+  // testing with dialogflow api
+  query = 'What are you?'
+  // Send request and log result
+  sessionClient
+   .detectIntent(request)
+   .then(responses => {
+     const result = responses[0].queryResult
+     io.emit('greeting', result.fulfillmentText)
+   })
+   .catch(err => {
+     console.error('ERROR:', err)
+   })
 })
 
 /**

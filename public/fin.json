@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fin-plendk",
+  "private_key_id": "d64fdf5a7d27034988e69d87473a20a03c1bf8b6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC382JnqJLdDrOA\nc8BA8l6clb1ZjgzNMibgEATIybQARXyw7exRd0Wnga4uICZevp07tOKvpOZhujjo\n0OXcDKagGBqwNCPPuTkPg2M+ScWp5La/Y5FatuZprMOSMWyWKi68IMoeN3aNPt6X\nPeB8umJlxnTtIcJeO6eTSTFswfVrDWcMFpkUkP4Qy55Hgc2vNAi9VIrzd9Sw5WHq\nOvsuZcBwog2JIvWwVobbNWN3+V3MBnyR8Eki18BdxDk+ekVnuPXdi13C0J5893uz\nWVumop9dloHsMccZEBqAqNXHOY6hYd11mlCWgEzSkskH8frBnLgTIQxx1ePnjt+B\nbr0EvkK5AgMBAAECggEAIkGAT1Z8tw7wTZkAsfeQt+9Iuj8yUhonVC2Xfn7VdwF5\ntYcxLYCdJ5MGSU+yZY1wwXgviM8YGhXwWCbiz2ZJt2GVwr+K9bmED0gD+MsLNNbD\nU4Pqwy5xXTePmg97LcHAP0eJ7DOe77HICPk8b23UOijJiIlzZVINpGeKfTrnhZ5B\ntuwPdsvaMIRW3JdGgHC/H1H9SOB3CDXfPizt6K595lecdeFmOHjOOMnXb7YjanVn\nEy6MmcK69L7SFZdT2GreLq4wCoAd00C2WGpVMQ/ispxgpXHScj2LL6LIQOX4kR6P\nOtTigRs2+FQ6QcXwfXyT1I9THOifFPr0aSHo8HAkKwKBgQDsSYCn8Gv0tqUU0fFp\nRO/icvuMb6EiMMYBolbBMsHcgEZv8QMcpCBkbeU/MDAmC2M5KQq+E9mq3q7GaXhP\nsJUm6Ez/f1U56kbQQ6+BZdofYExQ/A4goBKLs8mYO5yajJBSWBcIuEQ4kjB0sgfY\nIdXILOWP69Ly85LA/wVi4k+0pwKBgQDHTBu1HHtaP5LRIp9gp+i5lOIPDqmHE6Xa\ndtpVqIaAYWLYjr2a8Nu+0jSl67CcRE6dT4C0zfXbXMA/huU2tueYWKan1R/pByMJ\n3eteUcBFn8ceOIcUBI25/F9fs2ZNMgZXxMWhf4jWtRb2Gft/bET5diJSflGkk+oi\neNb9z/lZnwKBgCRBgwRB187M17fCHxDQCx7sFb0Ow+LDKR7HEhjC+QwkgqpaiOe0\nJ2RBmJOBiWHNDYSPz54q3ZNiZ976AAP6TGiT7HynxSQF1qfOOvfX8QgvdoZWprRK\n242kIKLDQtxUBTEdYytrWsxzYgwF5T48stjsSq0yukOdLD+A4gqyPxixAoGAO9vc\nJpWbZwvZKP9hJ0LHX5YcH7GjsXJxSiCQi1HGtCCL88dLo5HcLoAsV/lmXkkV46HR\nYnzJ70z4YRw/FCPzg4p848Pbhb4jA/+nhfi/6ymGQMlxqM2FU+s9Kh1UCLORvCLZ\nyRvpGbPiZaCALVFzlgmpXWWbV/clR51L1Yf1uLkCgYB7LNOJylFWAy0LoME4CY2V\n/ZZQGPQ4bSby3yicrEdA435P08+oAi0JorA0felhPEiAKd0znX45ytDT+YL7OvZ7\njPfp4YgbswKFUl6b7nE9HEbiWxcSk10hA0tJZeqn4ZQygeL0z1UHzU3angi2A3hx\niPDsp4vQiEiJybF9fiklCw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-integration@fin-plendk.iam.gserviceaccount.com",
+  "client_id": "117817839785288951392",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-integration%40fin-plendk.iam.gserviceaccount.com"
+}
