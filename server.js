@@ -54,6 +54,27 @@ app.set('port', port)
 const server = http.createServer(app)
 
 /**
+ * Adding web socket code.
+ */
+
+// ran npm install socket.io
+// appending web socket server to our server
+const io = require('socket.io')(server)
+
+// event handlers for socket events
+io.on('connection', function (socket) {
+  console.log(`A client with socket.id ${socket.id} connected!`)
+  socket.on('disconnect', function () {
+    console.log(`${socket.id} disconnected!`)
+  })
+  // adding for test custom socket event
+  socket.on('greeting', function (message) {
+    console.log(message)
+    io.emit('greeting', message)
+  })
+})
+
+/**
  * Event listener for HTTP server "error" event.
  */
 
