@@ -23,3 +23,7 @@ Sample routes table:
 #### Subheader (h4)
 
 TBD.
+
+#### ERD
+
+![alt text](https://imgur.com/eyt2Lng.jpg)
