@@ -3,6 +3,7 @@
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const Profile = require('./profile.js')
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -14,7 +15,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  passwordDigest: String
+  passwordDigest: String,
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Profile'
+  }
 }, {
   timestamps: true,
   toJSON: {

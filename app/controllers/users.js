@@ -34,6 +34,7 @@ const index = (req, res, next) => {
 
 const show = (req, res, next) => {
   User.findById(req.params.id)
+    .populate('profile')
     .then(user => user ? res.json({ user }) : next())
     .catch(next)
 }
@@ -71,6 +72,7 @@ const signin = (req, res, next) => {
         return user.save()
       }))
     .then(user => {
+      user.populate('profile')
       user = user.toObject()
       delete user.passwordDigest
       user.token = encodeToken(user.token)
