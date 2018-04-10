@@ -28,6 +28,7 @@ const getToken = () =>
 
 const index = (req, res, next) => {
   User.find({})
+    .populate('profile')
     .then(users => res.json({ users }))
     .catch(next)
 }
@@ -63,6 +64,7 @@ const signin = (req, res, next) => {
   const credentials = req.body.credentials
   const search = { email: credentials.email }
   User.findOne(search)
+    .populate('profile')
     .then(user =>
       user ? user.comparePassword(credentials.password)
             : Promise.reject(new HttpError(404)))
@@ -72,7 +74,6 @@ const signin = (req, res, next) => {
         return user.save()
       }))
     .then(user => {
-      user.populate('profile')
       user = user.toObject()
       delete user.passwordDigest
       user.token = encodeToken(user.token)
@@ -118,5 +119,5 @@ module.exports = controller({
   signout,
   changepw
 }, { before: [
-  { method: authenticate, except: ['signup', 'signin'] }
+  // { method: authenticate, except: ['signup', 'signin'] }
 ] })

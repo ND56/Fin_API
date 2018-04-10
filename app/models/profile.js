@@ -20,6 +20,8 @@ const profileSchema = new mongoose.Schema({
     },
     required: [true, 'User phone number required']
   },
+  hasMetFin: Boolean,
+  nameProvidedToFin: String,
   _owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
