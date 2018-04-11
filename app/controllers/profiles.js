@@ -24,15 +24,29 @@ const show = (req, res) => {
     console.log('line 24')
     console.log(req.user.id)
     Profile.find({ '_owner': req.user.id })
-      .then((profile) => {
-        const objProfile = profile[0]
-        return objProfile
+      .then(result => {
+        console.log(result)
+        return result
       })
-      .then((profile) => {
-        res.json({
-          profile: profile.toJSON({ virtuals: true, user: req.user })
-        })
+      .then(result => {
+        if (result[0] === undefined) {
+          res.send('No Profile')
+        } else {
+          const objProfile = result[0]
+          res.json({
+            profile: objProfile.toJSON({ virtuals: true, user: req.user })
+          })
+        }
       })
+      // .then((profile) => {
+      //   const objProfile = profile[0]
+      //   return objProfile
+      // })
+      // .then((profile) => {
+      //   res.json({
+      //     profile: profile.toJSON({ virtuals: true, user: req.user })
+      //   })
+      // })
   } else {
     // standard show action
     Profile.findById(req.params.id)
