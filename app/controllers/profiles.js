@@ -19,9 +19,30 @@ const index = (req, res, next) => {
 }
 
 const show = (req, res) => {
-  res.json({
-    profile: req.profile.toJSON({ virtuals: true, user: req.user })
-  })
+  // creating a find-by-user show action
+  if (req.params.id === 'find-by-user') {
+    console.log('line 24')
+    console.log(req.user.id)
+    Profile.find({ '_owner': req.user.id })
+      .then((profile) => {
+        const objProfile = profile[0]
+        return objProfile
+      })
+      .then((profile) => {
+        res.json({
+          profile: profile.toJSON({ virtuals: true, user: req.user })
+        })
+      })
+  } else {
+    // standard show action
+    Profile.findById(req.params.id)
+      .populate('_owner')
+      .then((profile) => {
+        res.json({
+          profile: profile.toJSON({ virtuals: true, user: req.user })
+        })
+      })
+  }
 }
 
 const create = (req, res, next) => {
@@ -59,6 +80,6 @@ module.exports = controller({
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Profile), only: ['show'] },
+  // { method: setModel(Profile), only: ['show'] },
   { method: setModel(Profile, { forUser: true }), only: ['update', 'destroy'] }
 ] })

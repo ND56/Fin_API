@@ -77,6 +77,7 @@ const signin = (req, res, next) => {
       user = user.toObject()
       delete user.passwordDigest
       user.token = encodeToken(user.token)
+      console.log('being sent to user', user)
       res.json({ user })
     })
     .catch(makeErrorHandler(res, next))
@@ -119,5 +120,5 @@ module.exports = controller({
   signout,
   changepw
 }, { before: [
-  // { method: authenticate, except: ['signup', 'signin'] }
+  { method: authenticate, except: ['signup', 'signin'] }
 ] })
