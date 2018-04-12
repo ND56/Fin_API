@@ -38,15 +38,6 @@ const show = (req, res) => {
           })
         }
       })
-      // .then((profile) => {
-      //   const objProfile = profile[0]
-      //   return objProfile
-      // })
-      // .then((profile) => {
-      //   res.json({
-      //     profile: profile.toJSON({ virtuals: true, user: req.user })
-      //   })
-      // })
   } else {
     // standard show action
     Profile.findById(req.params.id)
@@ -74,7 +65,7 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   delete req.body._owner  // disallow owner reassignment.
-  req.profile.update(req.body.profile)
+  req.profile.update(req.body.profile, { runValidators: true })
     .then(() => res.sendStatus(204))
     .catch(next)
 }
