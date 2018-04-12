@@ -61,7 +61,6 @@ const server = http.createServer(app)
  // added credentials to .env and json file
 const projectId = 'fin-plendk'
 const sessionId = 'quickstart-session-id'
-let query = 'Who are you?'
 const languageCode = 'en-US'
 
 // Instantiate a DialogFlow client.
@@ -71,36 +70,6 @@ const sessionClient = new dialogflow.SessionsClient()
 // Define session path
 const sessionPath = sessionClient.sessionPath(projectId, sessionId)
 
-// The text query request.
-const request = {
-  session: sessionPath,
-  queryInput: {
-    text: {
-      text: query,
-      languageCode: languageCode
-    }
-  }
-}
-
-// Send request and log result
-sessionClient
- .detectIntent(request)
- .then(responses => {
-   console.log('Detected intent')
-   const result = responses[0].queryResult
-   // console.log('Full Result: ', result)
-   console.log(`Query: ${result.queryText}`)
-   console.log(`Response: ${result.fulfillmentText}`)
-   if (result.intent) {
-     console.log(`Intent: ${result.intent.displayName}`)
-   } else {
-     console.log(`No intent matched.`)
-   }
- })
- .catch(err => {
-   console.error('ERROR:', err)
- })
-
 /**
  * Adding web socket code.
  */
@@ -109,29 +78,48 @@ sessionClient
 // appending web socket server to our server
 const io = require('socket.io')(server)
 
-// event handlers for socket events
+// event handlers for socket events for each connected client
 io.on('connection', function (socket) {
+  // let all clients know a client connected
+  io.emit('connection notice', 'Client connected')
+  // useful server console logs
   console.log(`A client with socket.id ${socket.id} connected!`)
   socket.on('disconnect', function () {
     console.log(`${socket.id} disconnected!`)
   })
-  // adding for test custom socket event
-  socket.on('greeting', function (message) {
-    console.log(message)
-    io.emit('greeting', message)
+  // handler for message socket events from connected client
+  socket.on('message', function (message) {
+    // build request object to send to dialogflow
+    const request = {
+      session: sessionPath,
+      queryInput: {
+        text: {
+          text: message,
+          languageCode: languageCode
+        }
+      }
+    }
+    console.log(request)
+    // send client message to dialogflow
+    sessionClient
+     .detectIntent(request)
+     .then(responses => {
+       const result = responses[0].queryResult
+       // helpful server console logs regarding response
+       console.log(`Query: ${result.queryText}`)
+       console.log(`Response: ${result.fulfillmentText}`)
+       if (result.intent) {
+         console.log(`Intent: ${result.intent.displayName}`)
+       } else {
+         console.log(`No intent matched.`)
+       }
+       // broadcast response to all connected clients
+       io.emit('message', result.fulfillmentText)
+     })
+     .catch(err => {
+       console.error('ERROR:', err)
+     })
   })
-  // testing with dialogflow api
-  query = 'What are you?'
-  // Send request and log result
-  sessionClient
-   .detectIntent(request)
-   .then(responses => {
-     const result = responses[0].queryResult
-     io.emit('greeting', result.fulfillmentText)
-   })
-   .catch(err => {
-     console.error('ERROR:', err)
-   })
 })
 
 /**
