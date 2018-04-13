@@ -59,6 +59,7 @@ const server = http.createServer(app)
 
  // ran npm install dialogflow
  // added credentials to .env and json file
+ // lines 63 and 64 are some variables we need for dialogflow request
 const projectId = 'fin-plendk'
 const languageCode = 'en-US'
 
