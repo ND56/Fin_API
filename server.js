@@ -60,15 +60,11 @@ const server = http.createServer(app)
  // ran npm install dialogflow
  // added credentials to .env and json file
 const projectId = 'fin-plendk'
-const sessionId = 'quickstart-session-id'
 const languageCode = 'en-US'
 
 // Instantiate a DialogFlow client.
 const dialogflow = require('dialogflow')
 const sessionClient = new dialogflow.SessionsClient()
-
-// Define session path
-const sessionPath = sessionClient.sessionPath(projectId, sessionId)
 
 /**
  * Adding web socket code.
@@ -90,17 +86,17 @@ io.on('connection', function (socket) {
   // handler for message socket events from connected client
   socket.on('message', function (message) {
     // build request object to send to dialogflow
+    const sessionPath = sessionClient.sessionPath(projectId, message.uniqueId)
     const request = {
       session: sessionPath,
       queryInput: {
         text: {
-          text: message,
+          text: message.message,
           languageCode: languageCode
         }
       }
     }
-    console.log(request)
-    // send client message to dialogflow
+    // send client message to dialogflow in unique session
     sessionClient
      .detectIntent(request)
      .then(responses => {
@@ -113,9 +109,7 @@ io.on('connection', function (socket) {
        } else {
          console.log(`No intent matched.`)
        }
-       // broadcast response to all connected clients
-       // io.emit('message', result.fulfillmentText)
-       // broadcast to just the requesting socket
+       // broadcast response to just the requesting socket
        socket.emit('message', result.fulfillmentText)
      })
      .catch(err => {
