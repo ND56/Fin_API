@@ -114,7 +114,9 @@ io.on('connection', function (socket) {
          console.log(`No intent matched.`)
        }
        // broadcast response to all connected clients
-       io.emit('message', result.fulfillmentText)
+       // io.emit('message', result.fulfillmentText)
+       // broadcast to just the requesting socket
+       socket.emit('message', result.fulfillmentText)
      })
      .catch(err => {
        console.error('ERROR:', err)
