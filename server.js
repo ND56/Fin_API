@@ -114,6 +114,12 @@ io.on('connection', function (socket) {
        if (result.intent.displayName === 'web.search.query') {
          // special socket event letting client know to do a google search
          socket.emit('google', result.fulfillmentText)
+       } else if (result.intent.displayName === 'Default Welcome Intent - follow-up') {
+         // special socket event for initial greeting
+         socket.emit('greeting', result.fulfillmentText)
+       } else if (result.intent.displayName === 'what.can.you.do') {
+         // special socket event for listing skills
+         socket.emit('skills', result.fulfillmentText)
        } else {
          // sending back regular response
          socket.emit('message', result.fulfillmentText)
