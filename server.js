@@ -111,7 +111,13 @@ io.on('connection', function (socket) {
          console.log(`No intent matched.`)
        }
        // broadcast response to just the requesting socket
-       socket.emit('message', result.fulfillmentText)
+       if (result.intent.displayName === 'web.search.query') {
+         // special socket event letting client know to do a google search
+         socket.emit('google', result.fulfillmentText)
+       } else {
+         // sending back regular response
+         socket.emit('message', result.fulfillmentText)
+       }
      })
      .catch(err => {
        console.error('ERROR:', err)
