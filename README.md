@@ -60,14 +60,13 @@ In it's current iteration, users can prompt Fin to do the following:
 | GET    | `/users/:id`           | `users#show`            |
 | GET    | `/users`               | `users#index`           |
 | DELETE | `/sign-out/:id`        | `users#signout`         |
-| GET    | `/profiles`            | `profiles#index`        |*
-| GET    | `/profiles/:id`        | `profiles#show`         |*
+| GET    | `/profiles`            | `profiles#index`        |
+| GET    | `/profiles/:id`        | `profiles#show`         |
 | POST   | `/profiles`            | `profiles#create`       |
-| PATCH  | `/profiles/:id`        | `profiles#update`       |*
-| DELETE | `/profiles/:id`        | `profiles#destroy`      |*
-|--------|------------------------|-------------------------|
+| PATCH  | `/profiles/:id`        | `profiles#update`       |
+| DELETE | `/profiles/:id`        | `profiles#destroy`      |
 
-*users may only view/edit/destroy their own profiles.
+**Users may only view/edit/destroy their own profiles.*
 
 ## Improvements Anticipated in Future Iterations
 
