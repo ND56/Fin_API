@@ -65,7 +65,6 @@ function callWeatherApi (city, date) {
     // Create the path for the HTTP request to get the weather
     const path = '/premium/v1/weather.ashx?format=json&num_of_days=1' +
       '&q=' + encodeURIComponent(city) + '&key=' + wwoApiKey + '&date=' + date
-    console.log('API Request: ' + host + path)
     // Make the HTTP request to get the weather
     http.get({host: host, path: path}, (res) => {
       let body = '' // var to store the response chunks
