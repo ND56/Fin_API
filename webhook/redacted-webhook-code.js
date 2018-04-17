@@ -1,5 +1,7 @@
 'use strict'
 
+// **NOTE** Functional webhook is privately deployed to google cloud
+
 // setup variables ------------------------------------------------
 const http = require('http')
 const host = 'api.worldweatheronline.com'
