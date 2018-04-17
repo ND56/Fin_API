@@ -66,7 +66,7 @@ In it's current iteration, users can prompt Fin to do the following:
 | PATCH  | `/profiles/:id`        | `profiles#update`       |
 | DELETE | `/profiles/:id`        | `profiles#destroy`      |
 
-**Users may only view/edit/destroy their own profiles.*
+**Users may only view/edit/destroy their own profiles*
 
 ## Improvements Anticipated in Future Iterations
 
