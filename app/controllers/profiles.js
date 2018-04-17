@@ -9,25 +9,25 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  Profile.find()
-    .populate('_owner')
-    .then(profiles => res.json({
-      profiles: profiles.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user }))
-    }))
+// edited index action to only allow users to see their own profile
+  Profile.find({ '_owner': req.user.id })
+    .then(result => {
+      if (result[0] === undefined) {
+        res.send('User may only view owned profiles and user does not currently own a profile.')
+      } else {
+        const objProfile = result[0]
+        res.json({
+          profile: objProfile.toJSON({ virtuals: true, user: req.user })
+        })
+      }
+    })
     .catch(next)
 }
 
-const show = (req, res) => {
+const show = (req, res, next) => {
   // creating a find-by-user show action
   if (req.params.id === 'find-by-user') {
-    console.log('line 24')
-    console.log(req.user.id)
     Profile.find({ '_owner': req.user.id })
-      .then(result => {
-        console.log(result)
-        return result
-      })
       .then(result => {
         if (result[0] === undefined) {
           res.send('No Profile')
@@ -38,15 +38,24 @@ const show = (req, res) => {
           })
         }
       })
+      .catch(next)
   } else {
-    // standard show action
+    // The normal show action, though it's been limited to only allow a user to
+    // access their own profile
     Profile.findById(req.params.id)
       .populate('_owner')
       .then((profile) => {
-        res.json({
-          profile: profile.toJSON({ virtuals: true, user: req.user })
-        })
+        if (profile._owner.id === req.user.id) {
+          res.json({
+            profile: profile.toJSON({ virtuals: true, user: req.user })
+          })
+        } else {
+          // error status 403 means "I know who you are, but I'm refusing your access"
+          res.status(403)
+          res.send('Users may only view profiles they own.')
+        }
       })
+      .catch(next)
   }
 }
 
