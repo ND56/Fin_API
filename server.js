@@ -120,6 +120,11 @@ io.on('connection', function (socket) {
        } else if (result.intent.displayName === 'what.can.you.do') {
          // special socket event for listing skills
          socket.emit('skills', result.fulfillmentText)
+       } else if (result.intent.displayName === 'spotify.query') {
+         // special socket event for spotify
+         spotifyRequest(socket, result.fulfillmentText)
+         // pass spotifyRequest the socket to then emit the response to the client
+         // OR promisify and do a .then
        } else {
          // sending back regular response
          socket.emit('message', result.fulfillmentText)
@@ -130,6 +135,62 @@ io.on('connection', function (socket) {
      })
   })
 })
+
+/**
+ * Adding Spotify Code.
+ */
+
+const request = require('request')
+const client_id = process.env.SPOTIFY_CLIENT_ID
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET
+
+const spotifyRequest = function (socket, query) {
+  // authorization object
+  const authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+    },
+    form: {
+      grant_type: 'client_credentials'
+    },
+    json: true
+  }
+  // request to spotify passing auth object
+  request.post(authOptions, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      // body contains access token granted due to receiving auth object
+      const token = body.access_token
+      // build the request object
+      const options = {
+        // url: 'https://api.spotify.com/v1/browse/categories/party/playlists?limit=3',
+        // url: `https://api.spotify.com/v1/browse/categories/${query}/playlists?limit=3`,
+        url: `https://api.spotify.com/v1/search?q=${query}&type=playlist&limit=3`,
+        // Encode spaces with the hex code %20 or +
+        // curl -X "GET" "https://api.spotify.com/v1/search?q=%22doom%20metal%22&type=playlist" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer "
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        json: true
+      }
+      // ** THE GET REQUEST **
+      request.get(options, function (error, response, body) {
+        // console.log('BODY: ', body)
+        // console.log('TOTAL RESULTS: ', body.playlists.total)
+        // console.log('PLAYLIST #1', body.playlists.items[0])
+        // console.log('PLAYLIST #1 NAME: ', body.playlists.items[0].name)
+        // console.log('PLAYLIST #1 URL: ', body.playlists.items[0].external_urls.spotify)
+        // console.log('PLAYLIST #1 TRACK TOTAL: ', body.playlists.items[0].tracks.total)
+        // console.log('PLAYLIST #1 IMAGE: ', body.playlists.items[0].images[0].url)
+        if (error) {
+          console.error(error)
+        } else {
+          socket.emit('spotify', body.playlists)
+        }
+      })
+    }
+  })
+}
 
 /**
  * Event listener for HTTP server "error" event.
