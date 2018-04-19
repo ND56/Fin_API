@@ -27,6 +27,10 @@ In it's current iteration, users can prompt Fin to do the following:
 7. Search the web
 8. Provide playlist recommendations
 
+## Screenshot of Current Iteration
+
+![alt text](https://imgur.com/NWvtq76.jpg)
+
 ## Technologies & Platforms
 
 ### Front-End
