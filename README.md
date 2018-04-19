@@ -74,6 +74,10 @@ In it's current iteration, users can prompt Fin to do the following:
 
 **Users may only view/edit/destroy their own profiles*
 
+### Installation Instructions
+
+To install dependencies, a simple npm install is sufficient.
+
 ## Improvements Anticipated in Future Iterations
 
 The following are improvements that I hope to continue working on:
