@@ -10,9 +10,9 @@
 
 ## Overview
 
-Fin is a conversational companion and personal assistant for users to interact with. Users are prompted to create a profile upon logging in, after which they are free to engage with Fin and edit or delete their profile as they see fit.
+Fin is a conversational companion and personal assistant built using Google's natural language processing platform, Dialogflow, as well as an assortment of other technologies. Users are prompted to create a profile upon logging in, after which they are free to engage with Fin and edit or delete their profile as they see fit.
 
-Interactions with Fin are processed through the use of web sockets and each client interaction is siloed from others, which is achieved through a combination of (1) having each client generate a unique dialogflow session and (2) having the Fin API socket only broadcast Fin's responses to the client that prompted the response.
+Interactions with Fin are processed through the use of web sockets and each client interaction is siloed from others, which is achieved through a combination of (1) having each client generate a unique Dialogflow session and (2) having the Fin API socket only broadcast Fin's responses to the client that prompted the response.
 
 ## Functionality
 
@@ -25,6 +25,7 @@ In it's current iteration, users can prompt Fin to do the following:
 5. Send text messages
 6. Report on the weather
 7. Search the web
+8. Provide playlist recommendations
 
 ## Technologies & Platforms
 
@@ -45,6 +46,7 @@ In it's current iteration, users can prompt Fin to do the following:
 6. Dialogflow API
 7. World Weather Online API (via Web Hook)
 8. Twilio (via Web Hook)
+9. Spotify API
 
 ### Example Input/Output Path: Query for Weather
 
@@ -72,10 +74,13 @@ In it's current iteration, users can prompt Fin to do the following:
 
 The following are improvements that I hope to continue working on:
 
-1. Improve Fin's conversational abilities
-2. Broaden Fin's practical skill set
+1. Broaden Fin's practical skill set
+2. Implement a method for user's to request specific functionality or to report intent mis-matches.
 3. Allow for vocal input/output
 4. UI improvements
+5. Improve Fin's conversational abilities and overall functionality
+
+-   *This last one is both important and tricky. Fin operates in large part by matching user queries to pre-programmed user "intents." It's difficult to keep these intents separated because---due to the machine learning algorithms that power Dialogflow---Fin will often unpredictably place undue emphasis on key words in a user's query, which causes Fin to accidentally prioritize a mis-matched intent. I continue to test and re-test Fin's intents, but have not yet had the capacity to put Fin through the rigorous trials a production-ready AI would no doubt be subjected to. For now, bear with him! Every interaction helps to improve his functionality.*
 
 ## Planning
 
@@ -131,6 +136,7 @@ The following are improvements that I hope to continue working on:
 -   Weather API
 -   Twilio API
 -   Google API
+-   Spotify API
 14. Style
 15. ReadME
 16. Debug/Test
